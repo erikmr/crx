@@ -34,9 +34,9 @@ function PureSuggestedActions({
       action: `Help me write an essay about silicon valley`,
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: 'Cual es el clima en',
+      label: 'in Queretaro?',
+      action: 'Cual es el clima en  Queretaro?',
     },
   ];
 
