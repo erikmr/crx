@@ -27,6 +27,7 @@ export default function Page() {
   const { update: updateSession } = useSession();
 
   useEffect(() => {
+    console.log("🚀 ~ useEffect ~ state.status:", state.status)
     if (state.status === 'failed') {
       toast({
         type: 'error',
@@ -40,6 +41,7 @@ export default function Page() {
     } else if (state.status === 'success') {
       setIsSuccessful(true);
       updateSession();
+      console.log("🚀 ~ useEffect ~ updateSession:")
       router.refresh();
     }
   }, [state.status]);
@@ -60,7 +62,7 @@ export default function Page() {
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email}>
           <SubmitButton isSuccessful={isSuccessful}>Acceder</SubmitButton>
-          <p className="text-center text-sm text-gray-600 mt-4 dark:text-zinc-400">
+          {/* <p className="text-center text-sm text-gray-600 mt-4 dark:text-zinc-400">
             {"¿No tienes una cuenta? "}
             <Link
               href="/register"
@@ -69,7 +71,7 @@ export default function Page() {
               Regístrate
             </Link>
             {' gratis'}
-          </p>
+          </p> */}
         </AuthForm>
       </div>
     </div>
