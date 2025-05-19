@@ -9,9 +9,11 @@ import { redirect } from 'next/navigation';
 
 export default async function Page() {
   const session = await auth();
+  console.log("🚀 ~ Page ~ session:", session)
 
-  if (!session) {
-    redirect('/api/auth/guest');
+  if (!session || session.user.type === 'guest') {
+    // redirect('/api/auth/guest');
+    redirect('/login');
   }
 
   const id = generateUUID();
