@@ -144,6 +144,8 @@ function PureMultimodalInput({
 
       if (response.ok) {
         const data = await response.json();
+
+        console.log(data);
         const { url, pathname, contentType } = data;
 
         return {
