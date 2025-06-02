@@ -50,6 +50,34 @@
       "when": 1746118166211,
       "tag": "0006_marvelous_frog_thor",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1748832800751,
+      "tag": "0007_sloppy_thundra",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1748832920300,
+      "tag": "0008_harsh_tyger_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1748832953249,
+      "tag": "0009_thin_machine_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1748833033616,
+      "tag": "0010_mixed_ultimo",
+      "breakpoints": true
     }
   ]
 }

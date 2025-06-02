@@ -11,6 +11,13 @@ import {
   boolean,
 } from 'drizzle-orm/pg-core';
 
+export const persona = pgTable('Persona', {
+  id: uuid('id').primaryKey().notNull().defaultRandom(),
+  nombreRazonSocial: varchar('nombreRazonSocial', { length: 200 }),
+  rfc: varchar('rfc', { length: 13 }),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
 export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   email: varchar('email', { length: 64 }).notNull(),

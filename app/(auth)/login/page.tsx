@@ -27,7 +27,6 @@ export default function Page() {
   const { update: updateSession } = useSession();
 
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ state.status:", state.status)
     if (state.status === 'failed') {
       toast({
         type: 'error',
@@ -41,7 +40,6 @@ export default function Page() {
     } else if (state.status === 'success') {
       setIsSuccessful(true);
       updateSession();
-      console.log("🚀 ~ useEffect ~ updateSession:")
       router.refresh();
     }
   }, [state.status]);
