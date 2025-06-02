@@ -1,1 +1,0 @@
-ALTER TABLE "Persona" ADD COLUMN "rfc" varchar(13) NOT NULL;
