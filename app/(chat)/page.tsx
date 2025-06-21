@@ -7,14 +7,25 @@ import { DataStreamHandler } from '@/components/data-stream-handler';
 import { auth } from '../(auth)/auth';
 import { redirect } from 'next/navigation';
 
+// eslint-disable-next-line import/no-unresolved
+import { Insert } from '@/domain/personas/services/Insert';
+
 export default async function Page() {
   const session = await auth();
-  console.log("🚀 ~ Page ~ session:", session)
+  console.log('🚀 ~ Page ~ session:', session);
 
   if (!session || session.user.type === 'guest') {
     // redirect('/api/auth/guest');
     redirect('/login');
   }
+  const hresult = await Insert({
+    nombreRazonSocial: 'Persona 1',
+    rfc: 'MARE691225MM5',
+    tipoPersona: 'fisica',
+    createdAt: new Date(),
+    createdBy: 'f89216e4-b52c-40cb-be11-7e8c2c9d9352',
+  });
+  console.log('🚀 ~ Page ~ hresult:', hresult);
 
   const id = generateUUID();
 

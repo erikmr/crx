@@ -1,0 +1,18 @@
+Crea un módulo completo en TypeScript con la arquitectura Clean Architecture. El módulo se llama {{nombre_del_modulo}} y debe incluir las siguientes carpetas:
+
+domain/entities para definir las entidades principales
+
+domain/repositories con una interfaz base con los métodos insert, update, delete, getById, getAll
+
+use-cases/ con los casos de uso: Insert{{Entidad}}, Update{{Entidad}}, Delete{{Entidad}}, Get{{Entidad}}ById, GetAll{{Entidad}}s
+
+interfaces/controllers/ con un controlador que tenga funciones para manejar cada uno de los métodos CRUD
+
+infrastructure/repositories/ con una clase que implemente la interfaz del repositorio usando un ORM como Drizzle
+
+routes/ o una función API que conecte la capa HTTP con el controlador
+
+Usa convención modularizada: cada módulo es autocontenible y no depende directamente de otros módulos.
+Implementa validación básica de datos dentro de los casos de uso.
+La entidad principal debe llamarse {{Entidad}} y debe tener al menos 3 propiedades: id, nombre, y activo.
+Genera código limpio, comentado y tipado en TypeScript. Si los archivos y/o carpetas no existen. crealas
