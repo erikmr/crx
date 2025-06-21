@@ -32,10 +32,9 @@ export async function GetById({
       data: foundPersonas,
     };
   } catch (error) {
-    console.error('Error al obtener persona por ID:', error);
     return {
       success: false,
-      message: 'Ocurrió un error al procesar la solicitud.',
+      message: `Ocurrió un error al obtener la persona: ${error}`,
       data: [],
     };
   }

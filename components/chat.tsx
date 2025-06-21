@@ -21,6 +21,8 @@ import { useChatVisibility } from '@/hooks/use-chat-visibility';
 import { useAutoResume } from '@/hooks/use-auto-resume';
 import { ChatSDKError } from '@/lib/errors';
 
+
+
 export function Chat({
   id,
   initialMessages,
@@ -89,6 +91,8 @@ export function Chat({
   const [hasAppendedQuery, setHasAppendedQuery] = useState(false);
 
   useEffect(() => {
+
+ 
     if (query && !hasAppendedQuery) {
       append({
         role: 'user',

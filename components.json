@@ -17,6 +17,7 @@
     "lib": "@/lib",
     "hooks": "@/hooks",
     "modules": "@/modules",
-    "db": "@/db"
+    "db": "@/lib/db",
+    "domains": "@/lib/domains"
   }
 }

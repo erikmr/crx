@@ -1,7 +1,7 @@
-import { timestamp, uuid } from 'drizzle-orm/pg-core';
+import { timestamp, uuid, boolean } from 'drizzle-orm/pg-core';
 import { user } from './user';
 // columns.helpers.ts
-const timestamps = {
+const auditColumns = {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   createdBy: uuid('created_by')
     .notNull()
@@ -10,6 +10,7 @@ const timestamps = {
   updatedBy: uuid('updated_by').references(() => user.id),
   deletedAt: timestamp('deleted_at'),
   deletedBy: uuid('deleted_by').references(() => user.id),
+  isDeleted: boolean('is_deleted').notNull().default(false),
 };
 
-export default timestamps;
+export default auditColumns;

@@ -20,10 +20,9 @@ export async function GetList(): Promise<{
       data: allPersonas,
     };
   } catch (error) {
-    console.error('Error al obtener la lista de personas:', error);
     return {
       success: false,
-      message: 'Ocurrió un error al procesar la solicitud.',
+      message: `Ocurrió un error al obtener la lista de personas: ${error}`,
       data: [],
     };
   }

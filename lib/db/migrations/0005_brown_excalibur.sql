@@ -1,0 +1,1 @@
+ALTER TABLE "Personas" ADD CONSTRAINT "Personas_rfc_unique" UNIQUE("rfc");

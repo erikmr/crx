@@ -1,27 +1,36 @@
+
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { eq } from 'drizzle-orm';
 import postgres from 'postgres';
 import { tipoPersonaType } from '@/lib/types';
+import { persona, type Persona } from '@/lib/db/schema';
+import { auth } from '@/app/(auth)/auth';
+import { getTimezoneOffset } from 'date-fns-tz';
 
 // biome-ignore lint: Forbidden non-null assertion.
 const client = postgres(process.env.POSTGRES_URL!);
 const db = drizzle(client);
 
-import { persona, type Persona } from '@/lib/db/schema';
 export async function Insert({
   nombreRazonSocial,
   rfc,
   tipoPersona,
-  createdAt,
-  createdBy,
 }: {
   nombreRazonSocial: string;
   rfc: string;
   tipoPersona: tipoPersonaType;
-  createdAt: Date;
-  createdBy: string;
 }): Promise<{ success: boolean; message: string; data: Persona[] }> {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      throw new Error('No se encontró la sesión del usuario.');
+    }
+    const createdBy = session.user.id;
+
+    const timeZone = 'America/Mexico_City';
+    const now = new Date();
+    const createdAt = new Date(now.getTime() + getTimezoneOffset(timeZone, now));
+
     const existingPersonas = await db
       .select()
       .from(persona)
@@ -52,10 +61,9 @@ export async function Insert({
       data: newPersonas,
     };
   } catch (error) {
-    console.error('Error al insertar persona:', error);
     return {
       success: false,
-      message: 'Ocurrió un error al procesar la solicitud.',
+      message: `Ocurrió un error al insertar la persona: ${error}`,
       data: [],
     };
   }

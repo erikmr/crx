@@ -34,8 +34,6 @@ export class Persona {
       nombreRazonSocial: this.nombreRazonSocial,
       rfc: this.rfc,
       tipoPersona: this.tipoPersona,
-      createdAt: this.createdAt,
-      createdBy: this.createdBy,
     });
 
     if (result.success && result.data.length > 0) {
@@ -45,28 +43,21 @@ export class Persona {
   }
 
   async update() {
-    if (!this.id) {
-      throw new Error('La instancia de Persona debe tener un ID para poder actualizarse.');
-    }
     return await services.Update({
       id: this.id,
       nombreRazonSocial: this.nombreRazonSocial,
       rfc: this.rfc,
       tipoPersona: this.tipoPersona,
-      updatedAt: new Date(),
-      updatedBy: 'system', // O el usuario logueado
     });
   }
 
   async delete() {
     if (!this.id) {
-      throw new Error('La instancia de Persona debe tener un ID para poder eliminarse.');
+      throw new Error(
+        'La instancia de Persona debe tener un ID para poder eliminarse.',
+      );
     }
-    return await services.Delete({
-      id: this.id,
-      deletedAt: new Date(),
-      deletedBy: 'system', // O el usuario logueado
-    });
+    return await services.Delete({ id: this.id });
   }
 
   static async getById(id: string) {

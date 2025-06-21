@@ -2,6 +2,8 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import { eq } from 'drizzle-orm';
 import postgres from 'postgres';
 import { persona, type Persona } from '@/lib/db/schema';
+import { auth } from '@/app/(auth)/auth';
+import { getTimezoneOffset } from 'date-fns-tz';
 
 // biome-ignore lint: Forbidden non-null assertion.
 const client = postgres(process.env.POSTGRES_URL!);
@@ -9,20 +11,28 @@ const db = drizzle(client);
 
 export async function Delete({
   id,
-  deletedAt,
-  deletedBy,
 }: {
   id: string;
-  deletedAt: Date;
-  deletedBy: string;
 }): Promise<{ success: boolean; message: string; data: Persona[] }> {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      throw new Error('No se encontró la sesión del usuario.');
+    }
+    const deletedBy = session.user.id;
+
+    const timeZone = 'America/Mexico_City';
+    const now = new Date();
+    const deletedAt = new Date(now.getTime() + getTimezoneOffset(timeZone, now));
+    const isDeleted = true;
+
     // Soft delete: actualiza los campos deletedAt y deletedBy
     const deletedPersonas = await db
       .update(persona)
       .set({
         deletedAt,
         deletedBy,
+        isDeleted,
       })
       .where(eq(persona.id, id))
       .returning();
@@ -41,10 +51,9 @@ export async function Delete({
       data: deletedPersonas,
     };
   } catch (error) {
-    console.error('Error al eliminar persona:', error);
     return {
       success: false,
-      message: 'Ocurrió un error al procesar la solicitud.',
+      message: `Ocurrió un error al eliminar la persona: ${error}`,
       data: [],
     };
   }

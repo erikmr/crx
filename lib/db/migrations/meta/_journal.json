@@ -36,6 +36,20 @@
       "when": 1750494502585,
       "tag": "0004_redundant_stepford_cuckoos",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1750531068732,
+      "tag": "0005_brown_excalibur",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1750534059713,
+      "tag": "0006_flat_oracle",
+      "breakpoints": true
     }
   ]
 }
