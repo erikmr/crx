@@ -8,7 +8,8 @@ import { auth } from '../(auth)/auth';
 import { redirect } from 'next/navigation';
 
 // eslint-disable-next-line import/no-unresolved
-import { Insert } from '@/domain/personas/services/Insert';
+// import { Insert } from '@/domain/personas/services/Insert';
+import { Persona } from '@/domain/personas/Persona';
 
 export default async function Page() {
   const session = await auth();
@@ -18,13 +19,20 @@ export default async function Page() {
     // redirect('/api/auth/guest');
     redirect('/login');
   }
-  const hresult = await Insert({
+
+  const persona = new Persona({
     nombreRazonSocial: 'Persona 1',
     rfc: 'MARE691225MM5',
     tipoPersona: 'fisica',
     createdAt: new Date(),
+    updatedAt: null,
+    deletedAt: null,
     createdBy: 'f89216e4-b52c-40cb-be11-7e8c2c9d9352',
+    updatedBy: null,
+    deletedBy: null,
   });
+
+  const hresult = await persona.insert();
   console.log('🚀 ~ Page ~ hresult:', hresult);
 
   const id = generateUUID();

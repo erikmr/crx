@@ -2,13 +2,13 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import { eq } from 'drizzle-orm';
 import postgres from 'postgres';
 import { tipoPersonaType } from '@/lib/types';
-import { ChatSDKError } from '@/lib/errors';
 
 // biome-ignore lint: Forbidden non-null assertion.
 const client = postgres(process.env.POSTGRES_URL!);
 const db = drizzle(client);
 
-import { persona } from '@/lib/db/schema';
+import { persona, type Persona } from '@/lib/db/schema';
+// import { Persona } from '@/domain/personas/Persona';
 export async function Insert({
   nombreRazonSocial,
   rfc,
@@ -21,22 +21,22 @@ export async function Insert({
   tipoPersona: tipoPersonaType;
   createdAt: Date;
   createdBy: string;
-}): Promise<{ id: string }> {
+}): Promise<{ success: boolean; message: string; data: Persona[] }> {
   try {
-    const existingPersona = await db
-      .select({ id: persona.id })
+    const existingPersonas = await db
+      .select()
       .from(persona)
       .where(eq(persona.rfc, rfc));
 
-    if (existingPersona.length > 0) {
-      return { id: '0' };
-      // throw new ChatSDKError(
-      //   'bad_request:personas',
-      //   'La persona con el RFC proporcionado ya existe.',
-      // );
+    if (existingPersonas.length > 0) {
+      return {
+        success: false,
+        message: 'La persona con el RFC proporcionado ya existe.',
+        data: existingPersonas,
+      };
     }
 
-    const result = await db
+    const newPersonas = await db
       .insert(persona)
       .values({
         nombreRazonSocial,
@@ -45,18 +45,19 @@ export async function Insert({
         createdAt,
         createdBy,
       })
-      .returning({ id: persona.id });
+      .returning();
 
-    return result[0];
+    return {
+      success: true,
+      message: 'Persona creada con éxito.',
+      data: newPersonas,
+    };
   } catch (error) {
-    if (error instanceof ChatSDKError) {
-      throw error;
-    }
-    // Log the original error for debugging purposes
-    console.error('Error inserting persona:', error);
-    throw new ChatSDKError(
-      'bad_request:database',
-      'Ocurrió un error al intentar guardar la persona.',
-    );
+    console.error('Error al insertar persona:', error);
+    return {
+      success: false,
+      message: 'Ocurrió un error al procesar la solicitud.',
+      data: [],
+    };
   }
 }
