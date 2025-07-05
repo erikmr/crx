@@ -18,7 +18,7 @@ import {
 
 const menuItems = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Clientes', href: '/dashboard/clientes', icon: Users },
+  { name: 'Clientes', href: '/personas', icon: Users },
   { name: 'Oportunidades', href: '/dashboard/oportunidades', icon: Briefcase },
   { name: 'Tareas', href: '/dashboard/tareas', icon: ClipboardCheck },
   { name: 'Informes', href: '/dashboard/informes', icon: BarChart },
@@ -42,7 +42,7 @@ export function Sidebar() {
     >
       <div className="flex h-16 items-center justify-between p-4">
         <Link href="/dashboard" className={cn('font-bold', isCollapsed && 'hidden')}>
-          CRM Logo
+          CRX 
         </Link>
         <Button variant="ghost" size="icon" onClick={toggleSidebar}>
           {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
