@@ -58,12 +58,13 @@ export const systemPrompt = ({
   requestHints: RequestHints;
 }) => {
   const requestPrompt = getRequestPromptFromHints(requestHints);
-
+  let prompt = '';
   if (selectedChatModel === 'chat-model-reasoning') {
-    return `${regularPrompt}\n\n${requestPrompt}`;
+    prompt = `${regularPrompt}\n\n${requestPrompt}`;
   } else {
-    return `${regularPrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;
+    prompt = `${regularPrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;
   }
+  return prompt;
 };
 
 export const codePrompt = `

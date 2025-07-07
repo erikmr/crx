@@ -19,6 +19,7 @@ import { MessageEditor } from './message-editor';
 import { DocumentPreview } from './document-preview';
 import { MessageReasoning } from './message-reasoning';
 import type { UseChatHelpers } from '@ai-sdk/react';
+import { PersonaCard } from './persona';
 
 const PurePreviewMessage = ({
   chatId,
@@ -183,6 +184,8 @@ const PurePreviewMessage = ({
                           args={args}
                           isReadonly={isReadonly}
                         />
+                      ) : toolName === 'crearPersona' ? (
+                        <Persona />
                       ) : null}
                     </div>
                   );
@@ -190,7 +193,7 @@ const PurePreviewMessage = ({
 
                 if (state === 'result') {
                   const { result } = toolInvocation;
-
+                  console.log('part', part);
                   return (
                     <div key={toolCallId}>
                       {toolName === 'getWeather' ? (
@@ -212,6 +215,8 @@ const PurePreviewMessage = ({
                           result={result}
                           isReadonly={isReadonly}
                         />
+                      ) : toolName === 'crearPersona' ? (
+                        <PersonaCard data={result} />
                       ) : (
                         <pre>{JSON.stringify(result, null, 2)}</pre>
                       )}

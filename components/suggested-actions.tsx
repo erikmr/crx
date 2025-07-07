@@ -38,6 +38,11 @@ function PureSuggestedActions({
       label: 'in Queretaro?',
       action: 'Cual es el clima en  Queretaro?',
     },
+    {
+      title: 'Crear una persona',
+      label: 'Erik Martinez, RFC: ERAM900101',
+      action: 'Crear una persona nueva',
+    },
   ];
 
   return (

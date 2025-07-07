@@ -244,6 +244,8 @@ function PureArtifact({
   }
 
   useEffect(() => {
+    
+    console.log(artifact)
     if (artifact.documentId !== 'init') {
       if (artifactDefinition.initialize) {
         artifactDefinition.initialize({

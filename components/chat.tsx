@@ -61,6 +61,7 @@ export function Chat({
     data,
   } = useChat({
     id,
+    api: '/api/chat',
     initialMessages,
     experimental_throttle: 100,
     sendExtraMessageFields: true,
