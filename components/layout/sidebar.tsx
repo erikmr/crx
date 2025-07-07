@@ -1,67 +1,177 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { 
-  LayoutDashboard, 
-  Users, 
-  Briefcase, 
-  ClipboardCheck, 
-  BarChart, 
-  Settings, 
-  ChevronLeft, 
-  ChevronRight 
+import * as React from 'react';
+import {
+  AudioWaveform,
+  BookOpen,
+  Bot,
+  Command,
+  Frame,
+  GalleryVerticalEnd,
+  // Map,
+  PieChart,
+  Settings2,
+  SquareTerminal,
 } from 'lucide-react';
 
-const menuItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Clientes', href: '/personas', icon: Users },
-  { name: 'Oportunidades', href: '/dashboard/oportunidades', icon: Briefcase },
-  { name: 'Tareas', href: '/dashboard/tareas', icon: ClipboardCheck },
-  { name: 'Informes', href: '/dashboard/informes', icon: BarChart },
-  { name: 'Configuración', href: '/dashboard/configuracion', icon: Settings },
-];
+import { NavMain } from '@/components/nav-main';
+import { NavProjects } from '@/components/nav-projects';
+import { NavUser } from '@/components/nav-user';
+import { TeamSwitcher } from '@/components/team-switcher';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from '@/components/ui/sidebar';
 
-export function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const pathname = usePathname();
+// This is sample data.
+const data = {
+  user: {
+    name: 'shadcn',
+    email: 'm@example.com',
+    avatar: '/avatars/shadcn.jpg',
+  },
+  teams: [
+    {
+      name: 'CRX',
+      logo: GalleryVerticalEnd,
+      plan: 'Enterprise',
+    },
+    {
+      name: 'Acme Corp.',
+      logo: AudioWaveform,
+      plan: 'Startup',
+    },
+    {
+      name: 'Evil Corp.',
+      logo: Command,
+      plan: 'Free',
+    },
+  ],
+  navMain: [
+    {
+      title: 'Playground',
+      url: '#',
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: 'History',
+          url: '#',
+        },
+        {
+          title: 'Starred',
+          url: '#',
+        },
+        {
+          title: 'Settings',
+          url: '#',
+        },
+      ],
+    },
+    {
+      title: 'Models',
+      url: '#',
+      icon: Bot,
+      items: [
+        {
+          title: 'Genesis',
+          url: '#',
+        },
+        {
+          title: 'Explorer',
+          url: '#',
+        },
+        {
+          title: 'Quantum',
+          url: '#',
+        },
+      ],
+    },
+    {
+      title: 'Documentation',
+      url: '#',
+      icon: BookOpen,
+      items: [
+        {
+          title: 'Introduction',
+          url: '#',
+        },
+        {
+          title: 'Get Started',
+          url: '#',
+        },
+        {
+          title: 'Tutorials',
+          url: '#',
+        },
+        {
+          title: 'Changelog',
+          url: '#',
+        },
+      ],
+    },
+    {
+      title: 'Settings',
+      url: '#',
+      icon: Settings2,
+      items: [
+        {
+          title: 'General',
+          url: '#',
+        },
+        {
+          title: 'Team',
+          url: '#',
+        },
+        {
+          title: 'Billing',
+          url: '#',
+        },
+        {
+          title: 'Limits',
+          url: '#',
+        },
+      ],
+    },
+  ],
+  projects: [
+    {
+      name: 'Design Engineering',
+      url: '#',
+      icon: Frame,
+    },
+    {
+      name: 'Sales & Marketing',
+      url: '#',
+      icon: PieChart,
+    },
+    {
+      name: 'Travel',
+      url: '#',
+      icon: PieChart,
+    },
+  ],
+};
 
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
+export function AppSidebar2({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
-    <aside 
-      className={cn(
-        'relative flex h-full flex-col border-r bg-background transition-all',
-        isCollapsed ? 'w-20' : 'w-64'
-      )}
-    >
-      <div className="flex h-16 items-center justify-between p-4">
-        <Link href="/dashboard" className={cn('font-bold', isCollapsed && 'hidden')}>
-          CRX 
-        </Link>
-        <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-          {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
-        </Button>
-      </div>
-      <nav className="flex-1 space-y-2 p-2">
-        {menuItems.map((item) => (
-          <Link key={item.name} href={item.href} passHref>
-            <Button
-              variant={pathname === item.href ? 'secondary' : 'ghost'}
-              className="w-full justify-start"
-              aria-label={item.name}
-            >
-              <item.icon className="mr-2 size-4" />
-              {!isCollapsed && <span>{item.name}</span>}
-            </Button>
-          </Link>
-        ))}
-      </nav>
-    </aside>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <TeamSwitcher teams={data.teams} />
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
   );
 }
