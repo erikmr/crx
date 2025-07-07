@@ -185,7 +185,7 @@ const PurePreviewMessage = ({
                           isReadonly={isReadonly}
                         />
                       ) : toolName === 'crearPersona' ? (
-                        <Persona />
+                        <PersonaCard />
                       ) : null}
                     </div>
                   );
@@ -193,7 +193,6 @@ const PurePreviewMessage = ({
 
                 if (state === 'result') {
                   const { result } = toolInvocation;
-                  console.log('part', part);
                   return (
                     <div key={toolCallId}>
                       {toolName === 'getWeather' ? (
